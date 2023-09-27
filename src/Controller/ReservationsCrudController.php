@@ -114,11 +114,12 @@ abstract class ReservationsCrudController extends AbstractController
             'json'
         );
         $requestReservationDto->setVacanciesId($requestVacanciesDto);
-        $errors = $this->validator->validate($requestReservationDto);
+        $validateReservation = $this->validator->validate($requestReservationDto);
+        $validateVacancies = $this->validator->validate($requestVacanciesDto);
 
-        if (\count($errors) > 0) {
+        if ( ( \count($validateReservation) > 0 ) || ( \count($validateVacancies) > 0 ) ) {
             return new JsonResponse(
-                "$errors",
+                "$validateReservation $validateVacancies",
                 Response::HTTP_BAD_REQUEST
             );
         }

@@ -34,8 +34,6 @@ If you want to create reservation by web browser you can use http://localhost:po
 ## Summary
 
 - Add email column to check user unique
-- Add in create&update if dateFrom < dateTo
-- In User register check is user exist
 - Add more code coverage unit tests
 
 ## License

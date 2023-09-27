@@ -17,10 +17,12 @@ class Vacancies
 
     #[ORM\Column]
     #[Assert\NotNull]
+    #[Assert\LessThan(propertyPath: "dateTo", message: "The start date must be less than the end date.")]
     private ?\DateTimeImmutable $dateFrom = null;
 
     #[ORM\Column]
     #[Assert\NotNull]
+    #[Assert\GreaterThan(propertyPath: "dateFrom", message: "The end date must be greater than the start date.")]
     private ?\DateTimeImmutable $dateTo = null;
 
     public function getId(): ?int
