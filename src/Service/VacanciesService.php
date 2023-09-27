@@ -31,7 +31,8 @@ class VacanciesService implements VacanciesInterface
         private ?ManagerRegistry $doctrine = null,
         private ?DatePeriod $dateRange = null,
         private ?array $dates = null
-    ) {}
+    ) {
+    }
 
     /**
      * Summary of checkIsVacanciesAvailable
@@ -49,7 +50,7 @@ class VacanciesService implements VacanciesInterface
 
         return $this->vacanciesRepository->checkIsVacanciesAlavable($this->dates, $available);
     }
-    
+
 
     /**
      * Summary of getDateRange
@@ -59,7 +60,7 @@ class VacanciesService implements VacanciesInterface
     public function getDateRange(Vacancies $vacancies): DatePeriod
     {
         $dateFrom = $vacancies->getDateFrom();
-        $dateTo = $vacancies->getDateTo()->setTime(0,0,1);
+        $dateTo = $vacancies->getDateTo()->setTime(0, 0, 1);
         $dateInterval = new DateInterval('P1D');
         $dateRange = new DatePeriod($dateFrom, $dateInterval, $dateTo);
 

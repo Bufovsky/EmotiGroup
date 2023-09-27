@@ -45,8 +45,6 @@ class ReservationFormType extends AbstractType
                 'input' => 'datetime_immutable',
                 'widget' => 'single_text',
             ])
-            ->add('submit', SubmitType::class, [
-            ]);
-        ;
+            ->add('submit', SubmitType::class, []);;
     }
 }

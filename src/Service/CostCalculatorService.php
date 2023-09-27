@@ -45,7 +45,7 @@ class CostCalculatorService extends AbstractController implements CostCalculator
     private function getDateRange(Reservations $reservations): DatePeriod
     {
         $dateFrom = $reservations->getVacanciesId()->getDateFrom();
-        $dateTo = $reservations->getVacanciesId()->getDateTo()->setTime(0,0,1);;
+        $dateTo = $reservations->getVacanciesId()->getDateTo()->setTime(0, 0, 1);;
         $dateInterval = new DateInterval('P1D');
         $dateRange = new DatePeriod($dateFrom, $dateInterval, $dateTo);
 

@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Summary of PageController
+ */
 #[Route('/', name: 'page.')]
 class PageController extends AbstractController
 {
@@ -36,8 +39,7 @@ class PageController extends AbstractController
     public function result(
         Request $request,
         ReservationsController $reservationsController
-    ): Response
-    {
+    ): Response {
         $form = $this->createForm(ReservationFormType::class);
         $form->handleRequest($request);
 

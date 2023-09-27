@@ -29,20 +29,20 @@ class VacanciesRepository extends ServiceEntityRepository
         parent::__construct($registry, Vacancies::class);
     }
 
-   /**
-    * USED NATIVE QUERY BECOUSE QUERYBUILDER DONT ACCEPT SUBQUERY IN LEFT JOIN
-    *
-    * @return Vacancies[] Returns an array of Vacancies objects
-    */
-    public function checkIsVacanciesAlavable(array $dates, string $vacancies) : bool
+    /**
+     * USED NATIVE QUERY BECOUSE QUERYBUILDER DONT ACCEPT SUBQUERY IN LEFT JOIN
+     *
+     * @return Vacancies[] Returns an array of Vacancies objects
+     */
+    public function checkIsVacanciesAlavable(array $dates, string $vacancies): bool
     {
         $query = "SELECT
                     subquery.date_to_check,
                     COUNT(t.id) AS count_of_records
                 FROM (";
 
-        foreach ( $dates as $date ) {
-            $query .= ( $dates[(count($dates) - 1)] === $date ) ? "SELECT '$date' AS date_to_check " : "SELECT '$date' AS date_to_check UNION ALL ";
+        foreach ($dates as $date) {
+            $query .= ($dates[(count($dates) - 1)] === $date) ? "SELECT '$date' AS date_to_check " : "SELECT '$date' AS date_to_check UNION ALL ";
         }
 
         $query .= ") AS subquery

@@ -18,19 +18,21 @@ use Exception;
 abstract class ReservationsCrudController extends AbstractController
 {
     /**
-     * AbstractCrudController constructor.
-     *
-     * @param SerializerInterface $serializer
-     * @param ValidatorInterface $validator
-     * @param ReservationsInterface $reservation
+     * Summary of __construct
+     * @param \Symfony\Component\Serializer\SerializerInterface $serializer
+     * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
+     * @param \App\Interface\ReservationsInterface $reservation
+     * @param \App\Interface\VacanciesInterface $vacancies
+     * @param \App\Service\CostCalculatorService $calculator
      */
     public function __construct(
-        private SerializerInterface $serializer, 
-        private ValidatorInterface $validator, 
+        private SerializerInterface $serializer,
+        private ValidatorInterface $validator,
         private ReservationsInterface $reservation,
         private VacanciesInterface $vacancies,
         private CostCalculatorService $calculator
-    ) {}
+    ) {
+    }
 
     /**
      * Get a resource by its identifier.
@@ -50,7 +52,7 @@ abstract class ReservationsCrudController extends AbstractController
                 Response::HTTP_BAD_REQUEST
             );
         }
- 
+
         return new JsonResponse(
             $this->serializer->serialize(
                 $reservationDto,
@@ -113,7 +115,7 @@ abstract class ReservationsCrudController extends AbstractController
         );
         $requestReservationDto->setVacanciesId($requestVacanciesDto);
         $errors = $this->validator->validate($requestReservationDto);
-        
+
         if (\count($errors) > 0) {
             return new JsonResponse(
                 "$errors",
@@ -138,13 +140,13 @@ abstract class ReservationsCrudController extends AbstractController
             $this->reservation->create($requestReservationDto);
         } catch (Exception $exception) {
             return new JsonResponse(
-                $exception->getMessage(), 
+                $exception->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
         return new JsonResponse(
-            'Reservation created succesfully.', 
+            'Reservation created succesfully.',
             Response::HTTP_CREATED
         );
     }
@@ -182,7 +184,4 @@ abstract class ReservationsCrudController extends AbstractController
             Response::HTTP_NO_CONTENT
         );
     }
-
-
-
 }

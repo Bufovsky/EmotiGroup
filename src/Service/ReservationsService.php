@@ -19,8 +19,9 @@ class ReservationsService implements ReservationsInterface
      */
     public function __construct(
         private EntityManagerInterface $entityManager
-    ) {}
-    
+    ) {
+    }
+
     /**
      * Summary of get
      * @param int $id

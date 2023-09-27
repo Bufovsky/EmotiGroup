@@ -39,9 +39,9 @@ class ReservationsRepository extends ServiceEntityRepository
         try {
             $this->entityManager->persist($reservations);
             $this->entityManager->flush();
-            
+
             return $reservations;
-        } catch(Exception $exception) {
+        } catch (Exception $exception) {
             return $exception->getMessage();
         }
     }
@@ -60,7 +60,7 @@ class ReservationsRepository extends ServiceEntityRepository
             $this->entityManager->flush();
 
             return true;
-        } catch(Exception $exception) {
+        } catch (Exception $exception) {
             return $exception->getMessage();
         }
     }
