@@ -33,7 +33,6 @@ If you want to create reservation by web browser you can use http://localhost:po
 
 ## Summary
 
-- Add email column to check user unique
 - Add more code coverage unit tests
 
 ## License

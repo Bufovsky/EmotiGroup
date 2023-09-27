@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Reservations;
+use App\Entity\User;
 use App\Entity\Vacancies;
 use App\Interface\ReservationsInterface;
 use App\Interface\VacanciesInterface;
+use App\Repository\UserRepository;
 use App\Service\CostCalculatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +32,8 @@ abstract class ReservationsCrudController extends AbstractController
         private ValidatorInterface $validator,
         private ReservationsInterface $reservation,
         private VacanciesInterface $vacancies,
-        private CostCalculatorService $calculator
+        private CostCalculatorService $calculator,
+        private UserRepository $userRepository
     ) {
     }
 
@@ -69,9 +72,9 @@ abstract class ReservationsCrudController extends AbstractController
      *
      * @param Request $request
      *
-     * @return mixed
+     * @return JsonResponse
      */
-    public function getListAction(Request $request): mixed
+    public function getListAction(Request $request): JsonResponse
     {
         try {
             $collection = $this->reservation->getList();
@@ -98,35 +101,40 @@ abstract class ReservationsCrudController extends AbstractController
      *
      * @param Request $request
      *
-     * @return mixed
+     * @return JsonResponse
      */
-    public function createAction(Request $request): mixed
+    public function createAction(Request $request): JsonResponse
     {
         $requestJson = $this->serializer->serialize($request->request->all(), 'json');
-        $requestReservationDto = $this->serializer->deserialize(
-            $requestJson,
-            Reservations::class,
-            'json'
-        );
-        $requestVacanciesDto = $this->serializer->deserialize(
-            $requestJson,
-            Vacancies::class,
-            'json'
-        );
-        $requestReservationDto->setVacanciesId($requestVacanciesDto);
-        $validateReservation = $this->validator->validate($requestReservationDto);
-        $validateVacancies = $this->validator->validate($requestVacanciesDto);
+        $dto = [
+            'reservations' => Reservations::class, 
+            'vacancies' => Vacancies::class, 
+            'user' => User::class
+        ];
 
-        if ( ( \count($validateReservation) > 0 ) || ( \count($validateVacancies) > 0 ) ) {
-            return new JsonResponse(
-                "$validateReservation $validateVacancies",
-                Response::HTTP_BAD_REQUEST
+        foreach ( $dto as $key => $value ) {
+            ${$key.'Dto'} = $this->serializer->deserialize(
+                $requestJson,
+                $value,
+                'json'
             );
+            ${'validate'.$key} = $this->validator->validate(${$key.'Dto'});
+
+            if ( \count(${'validate'.$key}) > 0 ) {
+                return new JsonResponse(
+                    ${'validate'.$key},
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
         }
 
-        $requestReservationDto = $this->calculator->count($requestReservationDto);
+        $password = $userDto->getPlainPassword();
+        $userDto = $this->userRepository->upgradePassword($userDto, $password);
+        $reservationsDto->setVacanciesId($vacanciesDto);
+        $reservationsDto->setUserId($userDto);
+        $reservationDto = $this->calculator->count($reservationsDto);
         $vacanciesAvailable = $this->vacancies->checkIsVacanciesAvailable(
-            $requestVacanciesDto,
+            $vacanciesDto,
             $this->getParameter('Vacancies')
         );
 
@@ -138,7 +146,7 @@ abstract class ReservationsCrudController extends AbstractController
         }
 
         try {
-            $this->reservation->create($requestReservationDto);
+            $this->reservation->create($reservationDto);
         } catch (Exception $exception) {
             return new JsonResponse(
                 $exception->getMessage(),

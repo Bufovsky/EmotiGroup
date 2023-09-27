@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Reservations;
+use App\Interface\ReservationsInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,7 +17,7 @@ use Exception;
  * @method Reservations[]    findAll()
  * @method Reservations[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReservationsRepository extends ServiceEntityRepository
+class ReservationsRepository extends ServiceEntityRepository implements ReservationsInterface
 {
     /**
      * Summary of __construct
@@ -29,39 +30,67 @@ class ReservationsRepository extends ServiceEntityRepository
     ) {
         parent::__construct($registry, Reservations::class);
     }
+    
+    /**
+     * Summary of get
+     * @param int $id
+     * @return Reservations|null
+     */
+    public function get(int $id): ?Reservations
+    {
+        $repository = $this->entityManager->getRepository(Reservations::class);
+
+        return $repository->find($id);
+    }
 
     /**
-     * @param Reservations entity prepared to create in databasse
-     * @return Reservations if correct object else exception
+     * Summary of getList
+     * @return array
      */
-    public function create(Reservations $reservations): Reservations|string
+    public function getList(): array
     {
-        try {
-            $this->entityManager->persist($reservations);
-            $this->entityManager->flush();
+        $repository = $this->entityManager->getRepository(Reservations::class);
 
-            return $reservations;
-        } catch (Exception $exception) {
-            return $exception->getMessage();
-        }
+        return $repository->findAll();
+    }
+
+    /**
+     * Summary of create
+     * @param \App\Entity\Reservations $reservation
+     * @return void
+     */
+    public function create(Reservations $reservation): void
+    {
+        $this->entityManager->persist($reservation->getVacanciesId());
+        $this->entityManager->flush();
+        
+        $this->entityManager->persist($reservation->getUserId());
+        $this->entityManager->flush();
+
+        $this->entityManager->persist($reservation);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * Summary of update
+     * @param \App\Entity\Reservations $reservation
+     * @return void
+     */
+    public function update(Reservations $reservation): void
+    {
+        $this->entityManager->persist($reservation);
+        $this->entityManager->flush();
     }
 
     /**
      * Summary of delete
      * @param int $id
-     * @return string
+     * @return void
      */
-    public function delete(int $id): string
+    public function delete(int $id): void
     {
-        try {
-            $reservations = $this->entityManager->getRepository(Reservations::class);
-            $reservation = $reservations->find($id);
-            $this->entityManager->remove($reservation);
-            $this->entityManager->flush();
-
-            return true;
-        } catch (Exception $exception) {
-            return $exception->getMessage();
-        }
+        $entity = $this->get($id);
+        $this->entityManager->remove($entity);
+        $this->entityManager->flush();
     }
 }

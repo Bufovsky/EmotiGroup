@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use App\Entity\Vacancies;
 use App\Repository\ReservationsRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,12 +17,9 @@ class Reservations
     private ?int $id = null;
 
     #[ORM\Column(length: 20)]
-    #[Assert\NotBlank]
-    private ?string $FirstName = null;
-
-    #[ORM\Column(length: 50)]
-    #[Assert\NotBlank]
-    private ?string $Surname = null;
+    #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist', 'all'])]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
+    private ?User $userId = null;
 
     #[ORM\Column]
     private ?float $Cost = null;
@@ -42,26 +40,14 @@ class Reservations
         return $this;
     }
 
-    public function getFirstName(): ?string
+    public function getUserId(): ?User
     {
-        return $this->FirstName;
+        return $this->userId;
     }
 
-    public function setFirstName(string $FirstName): static
+    public function setUserId(User $userId): static
     {
-        $this->FirstName = $FirstName;
-
-        return $this;
-    }
-
-    public function getSurname(): ?string
-    {
-        return $this->Surname;
-    }
-
-    public function setSurname(string $Surname): static
-    {
-        $this->Surname = $Surname;
+        $this->userId = $userId;
 
         return $this;
     }

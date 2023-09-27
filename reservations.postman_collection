@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3c65e232-c0c3-4e21-ae6e-aca461d0d268",
+		"_postman_id": "e79e29bc-0185-4bc1-abe2-cebdaab6e9a5",
 		"name": "Emoti Reservations",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29925024"
@@ -29,7 +29,6 @@
 						"0",
 						"1"
 					],
-					"port": "8000",
 					"path": [
 						"api",
 						"register"
@@ -61,7 +60,6 @@
 						"0",
 						"1"
 					],
-					"port": "8000",
 					"path": [
 						"api",
 						"login_check"
@@ -78,7 +76,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTU4MTExMTgsImV4cCI6MTY5NTgxNDcxOCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZW1haWxAYWxpYXMucGwifQ.tWqF4rjTCCw6s2-Nd71-ABxGPdHkBYPUPnp6hIrue-cJrVUK8JBQ3x48plQgyCtLuHAen4e0-0cM1MHNy8o4uFwqFXcA3FtvmvMvHE1UDJas49L9UrlaTKcGFLFvIlYDAORpgbFC9rTzQqjk6NVLSGkBhmZPB58SIP-e8NX3jJydFlfZPL32Ou_urxCDSFFBtcxFgR69uYLjZAaOgzYEQu5zanKRKsRVoWinqZWaE3CghwNkCyZZV3laT0SjfbUyWLsBHtylPZBDsxIX1rocAMqO0dstRsr4CF1fVTfrtet-LaiA0Z2McQCzo2E-dvazgaFvZXAq5-9a1NbMyGR2Yw",
+							"value": "token",
 							"type": "string"
 						}
 					]
@@ -96,13 +94,13 @@
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "firstName",
-							"value": "gg",
+							"key": "email",
+							"value": "user@user.pl",
 							"type": "text"
 						},
 						{
-							"key": "surname",
-							"value": "hf",
+							"key": "password",
+							"value": "password",
 							"type": "text"
 						},
 						{
@@ -126,7 +124,6 @@
 						"0",
 						"1"
 					],
-					"port": "8000",
 					"path": [
 						"v1",
 						"api",
@@ -144,7 +141,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTU4MTExMTgsImV4cCI6MTY5NTgxNDcxOCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZW1haWxAYWxpYXMucGwifQ.tWqF4rjTCCw6s2-Nd71-ABxGPdHkBYPUPnp6hIrue-cJrVUK8JBQ3x48plQgyCtLuHAen4e0-0cM1MHNy8o4uFwqFXcA3FtvmvMvHE1UDJas49L9UrlaTKcGFLFvIlYDAORpgbFC9rTzQqjk6NVLSGkBhmZPB58SIP-e8NX3jJydFlfZPL32Ou_urxCDSFFBtcxFgR69uYLjZAaOgzYEQu5zanKRKsRVoWinqZWaE3CghwNkCyZZV3laT0SjfbUyWLsBHtylPZBDsxIX1rocAMqO0dstRsr4CF1fVTfrtet-LaiA0Z2McQCzo2E-dvazgaFvZXAq5-9a1NbMyGR2Yw",
+							"value": "token",
 							"type": "string"
 						}
 					]
@@ -160,7 +157,6 @@
 						"0",
 						"1"
 					],
-					"port": "8000",
 					"path": [
 						"v1",
 						"api",
@@ -179,7 +175,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTU4MTExMTgsImV4cCI6MTY5NTgxNDcxOCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZW1haWxAYWxpYXMucGwifQ.tWqF4rjTCCw6s2-Nd71-ABxGPdHkBYPUPnp6hIrue-cJrVUK8JBQ3x48plQgyCtLuHAen4e0-0cM1MHNy8o4uFwqFXcA3FtvmvMvHE1UDJas49L9UrlaTKcGFLFvIlYDAORpgbFC9rTzQqjk6NVLSGkBhmZPB58SIP-e8NX3jJydFlfZPL32Ou_urxCDSFFBtcxFgR69uYLjZAaOgzYEQu5zanKRKsRVoWinqZWaE3CghwNkCyZZV3laT0SjfbUyWLsBHtylPZBDsxIX1rocAMqO0dstRsr4CF1fVTfrtet-LaiA0Z2McQCzo2E-dvazgaFvZXAq5-9a1NbMyGR2Yw",
+							"value": "token",
 							"type": "string"
 						}
 					]
@@ -195,7 +191,6 @@
 						"0",
 						"1"
 					],
-					"port": "8000",
 					"path": [
 						"v1",
 						"api",
@@ -213,7 +208,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTU4MTExMTgsImV4cCI6MTY5NTgxNDcxOCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiZW1haWxAYWxpYXMucGwifQ.tWqF4rjTCCw6s2-Nd71-ABxGPdHkBYPUPnp6hIrue-cJrVUK8JBQ3x48plQgyCtLuHAen4e0-0cM1MHNy8o4uFwqFXcA3FtvmvMvHE1UDJas49L9UrlaTKcGFLFvIlYDAORpgbFC9rTzQqjk6NVLSGkBhmZPB58SIP-e8NX3jJydFlfZPL32Ou_urxCDSFFBtcxFgR69uYLjZAaOgzYEQu5zanKRKsRVoWinqZWaE3CghwNkCyZZV3laT0SjfbUyWLsBHtylPZBDsxIX1rocAMqO0dstRsr4CF1fVTfrtet-LaiA0Z2McQCzo2E-dvazgaFvZXAq5-9a1NbMyGR2Yw",
+							"value": "token",
 							"type": "string"
 						}
 					]
@@ -229,7 +224,6 @@
 						"0",
 						"1"
 					],
-					"port": "8000",
 					"path": [
 						"v1",
 						"api",
