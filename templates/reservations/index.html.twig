@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservations{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form, {'method': 'POST', 'attr' : { 'class': 'h-100' }}) }}
+    <div class="container centering h-100">
+        <div class="window">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="align-center mb-3">Reservations</h1>
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.firstName, {'attr' : { 'class': 'form-control' }}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.surname, {'attr' : { 'class': 'form-control' }}) }}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    {{ form_row(form.dateFrom, {'attr' : { 'class': 'form-control' }}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.dateTo, {'attr' : { 'class': 'form-control' }}) }}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    {{ form_row(form.submit, {'attr' : { 'class': 'btn btn-primary w-100' }}) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
