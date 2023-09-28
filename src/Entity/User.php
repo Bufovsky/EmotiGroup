@@ -7,22 +7,20 @@ use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-#[UniqueEntity('email')]
 /**
  * Summary of User
  */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity('email')]
+#[ORM\MappedSuperclass()]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * Summary of id
      * @var 
      */
-    #[Groups(['user:read'])]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue]
@@ -34,7 +32,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[Assert\NotBlank]
     #[Assert\Email]
-    #[Groups(['user:read', 'user:create', 'user:update'])]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -43,15 +40,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var 
      */
     #[ORM\Column]
+    #[Assert\NotBlank]
     private ?string $password = null;
-
-    /**
-     * Summary of plainPassword
-     * @var 
-     */
-    #[Assert\NotBlank(groups: ['user:create'])]
-    #[Groups(['user:create', 'user:update'])]
-    private ?string $plainPassword = null;
 
     /**
      * Summary of roles
@@ -109,27 +99,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
-    /**
-     * Summary of getPlainPassword
-     * @return string|null
-     */
-    public function getPlainPassword(): ?string
-    {
-        return $this->plainPassword;
-    }
-
-    /**
-     * Summary of setPlainPassword
-     * @param mixed $plainPassword
-     * @return \App\Entity\User
-     */
-    public function setPlainPassword(?string $plainPassword): self
-    {
-        $this->plainPassword = $plainPassword;
-
-        return $this;
-    }
 
     /**
      * @see UserInterface
@@ -167,15 +136,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        $this->plainPassword = null;
+        $this->password = null;
     }
 
-    public function __toString() {
-        return $this->getId();
-        // return json_encode([
-        //     'email' => $this->getEmail(),
-        //     'password' => $this->getPassword(),
-        //     'roles' => $this->getRoles()
-        // ]);
-    }
+    // public function __toString() {
+    //     return (string) $this->getId();
+    // }
 }

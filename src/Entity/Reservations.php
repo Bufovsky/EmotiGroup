@@ -6,33 +6,60 @@ use App\Entity\User;
 use App\Entity\Vacancies;
 use App\Repository\ReservationsRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Summary of Reservations
+ */
 #[ORM\Entity(repositoryClass: ReservationsRepository::class)]
+#[ORM\MappedSuperclass()]
 class Reservations
 {
+    /**
+     * Summary of id
+     * @var 
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20)]
+    /**
+     * Summary of UserId
+     * @var 
+     */
     #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist', 'all'])]
     #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
-    private ?User $userId = null;
+    private ?User $UserId = null;
 
+    /**
+     * Summary of Cost
+     * @var 
+     */
     #[ORM\Column]
     private ?float $Cost = null;
 
+    /**
+     * Summary of VacanciesId
+     * @var 
+     */
     #[ORM\OneToOne(targetEntity: Vacancies::class, cascade: ['persist', 'all'])]
     #[ORM\JoinColumn(name: "vacancies_id", referencedColumnName: "id")]
     private ?Vacancies $VacanciesId = null;
 
+    /**
+     * Summary of getId
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Summary of setId
+     * @param int $id
+     * @return static
+     */
     public function setId(int $id): static
     {
         $this->id = $id;
@@ -40,23 +67,41 @@ class Reservations
         return $this;
     }
 
-    public function getUserId(): ?User
+    /**
+     * Summary of getUserId
+     * @return User
+     */
+    public function getUserId(): User
     {
-        return $this->userId;
+        return $this->UserId;
     }
 
-    public function setUserId(User $userId): static
+    /**
+     * Summary of setUserId
+     * @param \App\Entity\User $UserId
+     * @return static
+     */
+    public function setUserId(User $UserId): static
     {
-        $this->userId = $userId;
+        $this->UserId = $UserId;
 
         return $this;
     }
 
+    /**
+     * Summary of getCost
+     * @return float|null
+     */
     public function getCost(): ?float
     {
         return $this->Cost;
     }
 
+    /**
+     * Summary of setCost
+     * @param float $Cost
+     * @return static
+     */
     public function setCost(float $Cost): static
     {
         $this->Cost = $Cost;
@@ -64,11 +109,20 @@ class Reservations
         return $this;
     }
 
+    /**
+     * Summary of getVacanciesId
+     * @return Vacancies|null
+     */
     public function getVacanciesId(): ?Vacancies
     {
         return $this->VacanciesId;
     }
 
+    /**
+     * Summary of setVacanciesId
+     * @param \App\Entity\Vacancies $VacanciesId
+     * @return static
+     */
     public function setVacanciesId(Vacancies $VacanciesId): static
     {
         $this->VacanciesId = $VacanciesId;

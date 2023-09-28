@@ -111,7 +111,6 @@ abstract class ReservationsCrudController extends AbstractController
             'vacancies' => Vacancies::class, 
             'user' => User::class
         ];
-
         foreach ( $dto as $key => $value ) {
             ${$key.'Dto'} = $this->serializer->deserialize(
                 $requestJson,
@@ -122,13 +121,18 @@ abstract class ReservationsCrudController extends AbstractController
 
             if ( \count(${'validate'.$key}) > 0 ) {
                 return new JsonResponse(
-                    ${'validate'.$key},
-                    Response::HTTP_BAD_REQUEST
+                    $this->serializer->serialize(
+                        ${'validate'.$key},
+                        'json'
+                    ),
+                    Response::HTTP_BAD_REQUEST,
+                    ["Content-Type" => "application/json"],
+                    true
                 );
             }
         }
 
-        $password = $userDto->getPlainPassword();
+        $password = $userDto->getPassword();
         $userDto = $this->userRepository->upgradePassword($userDto, $password);
         $reservationsDto->setVacanciesId($vacanciesDto);
         $reservationsDto->setUserId($userDto);
