@@ -40,8 +40,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var 
      */
     #[ORM\Column]
-    #[Assert\NotBlank]
     private ?string $password = null;
+
+    /**
+     * Summary of plainPassword
+     * @var 
+     */
+    private ?string $plainPassword = null;
 
     /**
      * Summary of roles
@@ -99,6 +104,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    
+    /**
+     * Summary of getPlainPassword
+     * @return string|null
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Summary of setPlainPassword
+     * @param mixed $plainPassword
+     * @return \App\Entity\User
+     */
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
 
     /**
      * @see UserInterface
@@ -136,7 +162,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        $this->password = null;
+        $this->plainPassword = null;
     }
 
     // public function __toString() {
